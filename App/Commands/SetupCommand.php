@@ -46,7 +46,7 @@ class SetupCommand extends Command
 		$io->confirm('It is ok?', true);
 
 		//write
-		$envConfig = "MYSQL_HOST={$db_host}\nMYSQL_USERNAME={$db_username}\nMYSQL_PASSWORD={$db_password}\nMYSQL_DATABASE={$db_database}";
+		$envConfig = "MYSQL_HOST={$db_host}\nMYSQL_USERNAME={$db_username}\nMYSQL_PASSWORD={$db_password}\nMYSQL_DATABASE={$db_database}\n";
 		$io->success('Ok success to set database configuration!');
 
 
