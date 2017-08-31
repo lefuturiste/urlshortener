@@ -29,21 +29,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `urls` (
   `id` int(11) NOT NULL,
   `uuid` varchar(255) NOT NULL,
+  `redirect` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `urls`
---
-
-INSERT INTO `urls` (`id`, `uuid`, `created_at`, `updated_at`) VALUES
-(9, 'base_url', '2017-08-31 18:23:34', '0000-00-00 00:00:00'),
-(10, '0088d416', '2017-08-31 18:26:39', '0000-00-00 00:00:00'),
-(11, '71f3973f', '2017-08-31 18:26:52', '0000-00-00 00:00:00'),
-(12, '0f7e55f9', '2017-08-31 18:27:14', '0000-00-00 00:00:00'),
-(13, '90600e8f', '2017-08-31 18:27:34', '0000-00-00 00:00:00'),
-(14, '4dc7', '2017-08-31 18:27:56', '0000-00-00 00:00:00');
 
 --
 -- Index pour les tables exportées

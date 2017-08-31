@@ -16,7 +16,7 @@ Require Mysql 5.5 or higher
 
 ``composer create-project lefuturiste/urlshortener``
 
-#### Import database
+#### Import databases
 
 Import `urls.sql` witch is the only table you need for this application. Import it on your mysql database.
 
