@@ -28,6 +28,15 @@ Copy `.env.example` to `.env` and fill it with your own values
 
 You must set, in your webserver configuration the root path :  `public`
 
+## Usage
+
+Just simple two way:
+
+- Use database
+- Use the api (see wiki)
+
+Please read the wiki for see all usages.
+
 ## Support
 
 Open an issue on this repository.
