@@ -1,7 +1,14 @@
 {
     "name": "lefuturiste/urlshortener",
-    "description": "Free library for short url",
+    "description": "Simple php urlshortener based on slimframework3",
     "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Le_Futuriste",
+            "email": "contact@lefuturiste.fr"
+        }
+    ],
     "require": {
         "slim/slim": "^3.8",
         "simplon/mysql": "^1.4",

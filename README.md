@@ -1,5 +1,9 @@
 # Url Shortener
 
+Simple php urlshortener based on slimframework3.
+
+No configuration and no more code, this is like a CMS website
+
 ## Setup
 
 ### Server Requirement
