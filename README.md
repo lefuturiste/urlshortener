@@ -41,4 +41,8 @@ Please read the wiki for see all usages.
 
 Open an issue on this repository.
 
+## Contributing
+ 
+ For help everyone you can view the projet on Trello: https://trello.com/b/TwYu37PU/urlshortner
+ 
 ## Enjoy !
