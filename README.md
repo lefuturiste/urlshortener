@@ -4,7 +4,7 @@ Simple php urlshortener based on slimframework3.
 
 No configuration and no more code, this is like a CMS website
 
-## Setup
+## Installing application
 
 ### Server Requirement
 
@@ -14,17 +14,25 @@ Require Mysql 5.5 or higher
 
 ### Install with composer
 
+Do a: 
 ``composer create-project lefuturiste/urlshortener``
+for download the project
 
-#### Import databases
+Move in directory: 
+``cd urlshortener``
 
-Import `urls.sql` witch is the only table you need for this application. Import it on your mysql database.
+Run command line installer
+``php installer setup``
 
-#### Configuration
+In installer, anwser the question by your own configuration like: mysql database username, password and name of database.
 
-Copy `.env.example` to `.env` and fill it with your own values
+Just follow the installer!
 
-#### Run application
+## Configuration
+
+Use `.env` file for set the configuation.
+
+## Run application
 
 You must set, in your webserver configuration the root path :  `public`
 

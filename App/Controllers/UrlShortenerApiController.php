@@ -64,14 +64,13 @@ class UrlShortenerApiController extends Controller
 		$req = $this->db->fetchColumn('SELECT uuid FROM urls WHERE uuid = :uuid', [
 			'uuid' => $uuid
 		]);
-		if (empty($req)){
+		if (empty($req)) {
 			return $response->withJson($this->db->insert('urls', [
 				'uuid' => $uuid,
 				'redirect' => $request->getParsedBody()['redirect'],
-				'base' => false,
 				'created_at' => Time::now()
 			]));
-		}else{
+		} else {
 			return $response->withJson([
 				'Error' => 'Uuid ressource already used'
 			])->withStatus(400);
@@ -89,19 +88,27 @@ class UrlShortenerApiController extends Controller
 	 */
 	public function update(ServerRequestInterface $request, ResponseInterface $response, $args)
 	{
+		//if this uuid is empty or not isset => uuid is not required
+		if (empty($request->getParsedBody()['uuid']) OR !isset($request->getParsedBody()['uuid'])) {
+			$uuid = $args['uuid'];
+		} else {
+			$uuid = $request->getParsedBody()['uuid'];
+		}
+
 		//if the uuid is already used
 		$req = $this->db->fetchColumn('SELECT uuid FROM urls WHERE uuid = :uuid', [
 			'uuid' => $args['uuid']
 		]);
-		if (!empty($req)){
+
+		if (!empty($req)) {
 			return $response->withJson($this->db->update('urls', [
 				'uuid' => $args['uuid']
 			], [
-				'uuid' => $request->getParsedBody()['uuid'],
+				'uuid' => $uuid,
 				'redirect' => $request->getParsedBody()['redirect'],
 				'updated_at' => Time::now()
 			]));
-		}else{
+		} else {
 			return $response->withJson([
 				'Error' => 'Ressource not found'
 			])->withStatus(404);
