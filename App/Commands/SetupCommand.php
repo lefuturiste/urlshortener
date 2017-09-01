@@ -45,8 +45,11 @@ class SetupCommand extends Command
 		]);
 		$io->confirm('It is ok?', true);
 
+		$mysql_enable = $io->ask('You want to import database scheme ?', true);
+
 		//write
 		$envConfig = "MYSQL_HOST={$db_host}\nMYSQL_USERNAME={$db_username}\nMYSQL_PASSWORD={$db_password}\nMYSQL_DATABASE={$db_database}\n";
+
 		$io->success('Ok success to set database configuration!');
 
 
@@ -80,9 +83,6 @@ class SetupCommand extends Command
 		}
 		$envConfig .= "APP_DEBUG={$app_debug}\nBASE_REDIRECT_URL={$base_redirect}";
 
-
-		$io->text('Making configuration file...');
-
 		$File = ".env";
 		$Handle = fopen($File, 'w');
 		fwrite($Handle, $envConfig);
@@ -90,15 +90,17 @@ class SetupCommand extends Command
 
 		$io->success('Success creating .env file!');
 
-		//connection à la bdd
-		$dbConn = new \Simplon\Mysql\Mysql(
-			$db_host,
-			$db_username,
-			$db_password,
-			$db_database
-		);
+		//import mysql scheme
+		if ($mysql_enable){
+			//connection à la bdd
+			$dbConn = new \Simplon\Mysql\Mysql(
+				$db_host,
+				$db_username,
+				$db_password,
+				$db_database
+			);
 
-		$dbConn->executeSql("CREATE TABLE `urls` (
+			$dbConn->executeSql("CREATE TABLE `urls` (
 							  `id` int(11) NOT NULL,
 							  `uuid` varchar(255) NOT NULL,
 							  `redirect` varchar(255) NOT NULL,
@@ -106,11 +108,12 @@ class SetupCommand extends Command
 							  `updated_at` datetime NOT NULL
 							) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 							");
-		$dbConn->executeSql("ALTER TABLE `urls`
+			$dbConn->executeSql("ALTER TABLE `urls`
   ADD PRIMARY KEY (`id`);");
-		$dbConn->executeSql("ALTER TABLE `urls`
+			$dbConn->executeSql("ALTER TABLE `urls`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;");
 
-		$io->success('Success creating mysql table!');
+			$io->success('Success creating mysql table!');
+		}
 	}
 }
