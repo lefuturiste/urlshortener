@@ -65,11 +65,15 @@ class UrlShortenerApiController extends Controller
 			'uuid' => $uuid
 		]);
 		if (empty($req)) {
-			return $response->withJson($this->db->insert('urls', [
+			$this->db->insert('urls', [
 				'uuid' => $uuid,
 				'redirect' => $request->getParsedBody()['redirect'],
 				'created_at' => Time::now()
-			]));
+			])
+			return $response->withJson([
+				'success' => true,
+				'uuid' => $uuid
+			]);
 		} else {
 			return $response->withJson([
 				'Error' => 'Uuid ressource already used'
@@ -101,13 +105,17 @@ class UrlShortenerApiController extends Controller
 		]);
 
 		if (!empty($req)) {
-			return $response->withJson($this->db->update('urls', [
+			$this->db->update('urls', [
 				'uuid' => $args['uuid']
 			], [
 				'uuid' => $uuid,
 				'redirect' => $request->getParsedBody()['redirect'],
 				'updated_at' => Time::now()
-			]));
+			])
+			return $response->withJson([
+				'success' => true,
+				'uuid' => $uuid
+			]);
 		} else {
 			return $response->withJson([
 				'Error' => 'Ressource not found'
@@ -125,8 +133,22 @@ class UrlShortenerApiController extends Controller
 	 */
 	public function destroy(ServerRequestInterface $request, ResponseInterface $response, $args)
 	{
-		return $response->withJson($this->db->delete('urls', [
+		//if the uuid is already used
+		$req = $this->db->fetchColumn('SELECT uuid FROM urls WHERE uuid = :uuid', [
 			'uuid' => $args['uuid']
-		]));
+		]);
+
+		if (!empty($req)) {
+			$this->db->delete('urls', [
+				'uuid' => $args['uuid']
+			])
+			return $response->withJson([
+				'success' => true
+			]);
+		} else {
+			return $response->withJson([
+				'Error' => 'Ressource not found'
+			])->withStatus(404);
+		}
 	}
 }
