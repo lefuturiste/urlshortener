@@ -73,7 +73,7 @@ class UrlShortenerApiController extends Controller
 			return $response->withJson([
 				'success' => true,
 				'uuid' => $uuid,
-				'url' => $this->container->config['base_url'] . $uuid
+				'url' => $this->container->config['base_url'] . '/' . $uuid
 			]);
 		} else {
 			return $response->withJson([
@@ -116,7 +116,7 @@ class UrlShortenerApiController extends Controller
 			return $response->withJson([
 				'success' => true,
 				'uuid' => $uuid,
-				'url' => $this->container->config['base_url'] . $uuid
+				'url' => $this->container->config['base_url'] . '/' . $uuid
 			]);
 		} else {
 			return $response->withJson([

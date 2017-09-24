@@ -68,12 +68,16 @@ class SetupCommand extends Command
 			$api_password = $io->ask('What is your api password?', 'PASSWORD');
 		}
 
+		$authConfig = Yaml::dump([
+			"auth" => [
+				"{$api_username}:{$api_password}"
+			]
+		]);
 		$io->success('Ok success to set api authentification!');
-		$envConfig .= "API_AUTH={$api_username}:{$api_password}\n";
-
 
 		$io->section('Other configuration');
 		$base_redirect = $io->ask('What is your base redirect url?', 'http://example.com');
+		$base_url = $io->ask('What is your app base url?', 'http://example.com');
 		$app_debug = $io->ask("What is app debug mode ? (1 = debug mode) (0 = production mode)", 0);
 
 		if ($app_debug){
@@ -81,14 +85,21 @@ class SetupCommand extends Command
 			$io->warning('Warning: App debug is enabled please be careful, all errors will be showed');
 
 		}
-		$envConfig .= "APP_DEBUG={$app_debug}\nBASE_REDIRECT_URL={$base_redirect}";
+		$envConfig .= "APP_DEBUG={$app_debug}\nBASE_REDIRECT_URL={$base_redirect}\nBASE_URL={$base_url}";
 
+		//write .env
 		$File = ".env";
 		$Handle = fopen($File, 'w');
 		fwrite($Handle, $envConfig);
 		fclose($Handle);
+		
+		//write auth.yml
+		$File = "auth.yml";
+		$Handle = fopen($File, 'w');
+		fwrite($Handle, $authConfig);
+		fclose($Handle);
 
-		$io->success('Success creating .env file!');
+		$io->success('Success creating .env & auth.yml file!');
 
 		//import mysql scheme
 		if ($mysql_enable){
