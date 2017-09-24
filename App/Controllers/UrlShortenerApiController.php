@@ -69,10 +69,11 @@ class UrlShortenerApiController extends Controller
 				'uuid' => $uuid,
 				'redirect' => $request->getParsedBody()['redirect'],
 				'created_at' => Time::now()
-			])
+			]);
 			return $response->withJson([
 				'success' => true,
-				'uuid' => $uuid
+				'uuid' => $uuid,
+				'url' => $this->container->config['base_url'] . $uuid
 			]);
 		} else {
 			return $response->withJson([
@@ -111,10 +112,11 @@ class UrlShortenerApiController extends Controller
 				'uuid' => $uuid,
 				'redirect' => $request->getParsedBody()['redirect'],
 				'updated_at' => Time::now()
-			])
+			]);
 			return $response->withJson([
 				'success' => true,
-				'uuid' => $uuid
+				'uuid' => $uuid,
+				'url' => $this->container->config['base_url'] . $uuid
 			]);
 		} else {
 			return $response->withJson([
@@ -141,7 +143,7 @@ class UrlShortenerApiController extends Controller
 		if (!empty($req)) {
 			$this->db->delete('urls', [
 				'uuid' => $args['uuid']
-			])
+			]);
 			return $response->withJson([
 				'success' => true
 			]);
